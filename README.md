@@ -18,8 +18,25 @@
 ## Usage
 
 1. **Run the Script:** Execute the script in PowerShell.
-2. **Follow Prompts:** After simulating inputs and clicks, the script will prompt you with a Yes/No dialog.
-3. **Respond to Prompts:** Choose Yes or No to continue or halt further actions.
+2. **Setup:** Define which actions and keypresses you need and set them up
+
+    ```powershell
+    # --- Step 1: Mouse Logic ---
+        $step1Logic = {
+        [InputSimulator]::SetMousePosition(1024, 256) # Moves mouse
+    }
+
+    # --- Step 2: Simulate Key Press ---
+    $step2Logic = {
+        [InputSimulator]::SetMousePosition(50, 50) # Moves mouse
+        FlashMouseCursor # Moves cursor rapidly to visually identify
+        [InputSimulator]::PressKey(0x41)  # Press the 'A' key
+        [InputSimulator]::PressKey(0x32)
+    }
+    ```
+
+3. **Execute:** Once you are satisfied with the logic and actions run the script.
+It will prompt a yes/no dialog between every stepLogic in *...Main.ps1
 
 ### Example
 
