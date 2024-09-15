@@ -4,6 +4,11 @@
 
 `InputSimulator.ps1` is a PowerShell script designed to simulate keyboard inputs and mouse clicks using .NET's `System.Windows.Forms` library. This script allows you to automate interactions with user interface elements by sending keystrokes and mouse events.
 
+## Requirements
+
+* PowerShell 5.0 or later.
+* .NET Framework 4.5 or later.
+
 ## Features
 
 - Simulate key presses.
