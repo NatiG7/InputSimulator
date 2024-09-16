@@ -1,7 +1,7 @@
 # Function to flash the mouse cursor
 function FlashMouseCursor {
     param (
-        [int]$flashCount = 5,         # Number of times the cursor flashes
+        [int]$flashCount = 5, # Number of times the cursor flashes
         [int]$flashDuration = 100     # Duration of each flash in milliseconds
     )
 
@@ -47,8 +47,8 @@ function Show-YesNoDialog {
 # Function to handle the logic of each step
 function ExecuteStep {
     param (
-        [ScriptBlock]$stepLogic,  # The logic to execute for this step
-        [string]$description,     # Description of the step
+        [ScriptBlock]$stepLogic, # The logic to execute for this step
+        [string]$description, # Description of the step
         [int]$stepNumber          # Step number
     )
 
@@ -65,7 +65,8 @@ function ExecuteStep {
 
         if ($result -eq [System.Windows.Forms.DialogResult]::Yes) {
             $repeatStep = $false  # Move to the next step
-        } elseif ($result -eq [System.Windows.Forms.DialogResult]::Cancel) {
+        }
+        elseif ($result -eq [System.Windows.Forms.DialogResult]::Cancel) {
             Write-Host "User chose to exit. Exiting..."
             exit  # Exit the script
         }

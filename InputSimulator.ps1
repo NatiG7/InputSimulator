@@ -1,5 +1,6 @@
 # Load Windows Forms assembly
 Add-Type -AssemblyName System.Windows.Forms
+Add-Type -AssemblyName System.Drawing
 
 # Function to check if a type already exists and prompt the user to restart
 function Remove-Type {
