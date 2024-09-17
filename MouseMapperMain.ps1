@@ -11,12 +11,16 @@ $form.Text = "Mouse Position Mapper"
 $form.Size = New-Object System.Drawing.Size(300,100)
 $form.StartPosition = "CenterScreen"
 $form.TopMost = $true
-$form.Opacity = 0.3
+$form.Opacity = 0.3 # To see behind the recorder form
 
+# Init click number
+$clickNumber = 0
 # Handle the mouse click event
 $form.Add_MouseClick({
-    $attemptNumber++
-    Write-MousePosition -filePath $positionsFilePath -attemptNumber $attemptNumber
+
+    $global:clickNumber++
+
+    Write-MousePosition -filePath $positionsFilePath -attemptNumber $attemptNumber -clickNumber $clickNumber
 
     # Save the new attempt number to file
     Set-Content -Path $attemptNumberFilePath -Value $attemptNumber
@@ -36,3 +40,11 @@ $form.Add_KeyPress({
 # Show the form to capture clicks
 $form.ShowDialog()
 
+# Check if ESC is pressed to exit
+while ($form.Visible) {
+    Start-Sleep -Milliseconds 100
+    if ([System.Windows.Forms.Control]::ModifierKeys -eq [System.Windows.Forms.Keys]::Escape) {
+        Write-Host "Exiting Mouse Position Mapper."
+        $form.Close()
+    }
+}

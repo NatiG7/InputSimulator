@@ -3,13 +3,30 @@ $positionsFilePath = "MousePositions.txt"
 $attemptNumberFilePath = "AttemptNumber.txt"
 
 # Initialize or clear the positions file
-Add-Content -Path $positionsFilePath -Value "Mouse Positions Log:`n" -Force
+if (-not (Test-Path $positionsFilePath)) {
+    Add-Content -Path $positionsFilePath -Value "Mouse Positions Log:`n" -Force
+}
 
 # Read the current attempt number from file or initialize to 0
-$attemptNumber = if (Test-Path $attemptNumberFilePath) {
-    [int](Get-Content $attemptNumberFilePath)
+if (Test-Path $attemptNumberFilePath) {
+    $lastLine = (Get-Content $attemptNumberFilePath | Select-Object -Last 1)
+    if ($lastLine -match "Attempt Number : (\d+)") {
+        $global:attemptNumber = [int]$matches[1]
+    }
+    else {
+        $global:attemptNumber = 0
+    }
 }
-else { 0 }
+else {
+    $global:attemptNumber = 0
+}
+
+# Increment attempt number
+$global:attemptNumber++
+
+
+# Start logging attempt in the positions file
+Add-Content -Path $positionsFilePath -Value "`nAttempt Number : $attemptNumber`n"
 
 # Function to generate a unique ID
 function New-UniqueId {
@@ -20,14 +37,15 @@ function New-UniqueId {
 function Write-MousePosition {
     param (
         [string]$filePath,
-        [int]$attemptNumber
+        [int]$attemptNumber,
+        [int]$clickNumber
     )
-    $point = [MouseMapper]::GetMousePosition()
+    $point = [MouseMapper]::GetMousePosition()  # Assuming this function gets the current mouse position
     $uniqueId = New-UniqueId
     $timestamp = (Get-Date).ToString("yyyy-MM-dd HH:mm:ss")
-    $position = "Attempt ${attemptNumber}:`nDate: $timestamp`nUnique ID: $uniqueId`nPosition: X=$($point.X), Y=$($point.Y)`n"
+    $position = "Click number $clickNumber : $uniqueId, $timestamp, X=$($point.X), Y=$($point.Y)"
     Add-Content -Path $filePath -Value $position
-    Write-Host "Position recorded: Attempt $attemptNumber, ID $uniqueId, Date $timestamp"
+    Write-Host "Position recorded: Attempt $attemptNumber, Click $clickNumber, ID $uniqueId, Date $timestamp"
 }
 
 # Function to show a tooltip message
@@ -51,9 +69,9 @@ function Show-Tooltip {
     $timer = New-Object System.Windows.Forms.Timer
     $timer.Interval = $durationSeconds * 1000 # Milliseconds
     $timer.Add_Tick({
-        $form.Close()
-        $timer.Stop()
-    })
+            $form.Close()
+            $timer.Stop()
+        })
     $form.Show()
     $form.Close()
 }
