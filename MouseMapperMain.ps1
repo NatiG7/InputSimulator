@@ -11,6 +11,7 @@ $form.Text = "Mouse Position Mapper"
 $form.Size = New-Object System.Drawing.Size(300,100)
 $form.StartPosition = "CenterScreen"
 $form.TopMost = $true
+$form.Opacity = 0.3
 
 # Handle the mouse click event
 $form.Add_MouseClick({
