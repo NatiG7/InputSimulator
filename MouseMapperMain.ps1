@@ -24,14 +24,14 @@ $form.Add_MouseClick({
     Start-Sleep -Milliseconds 500
 })
 
-# Show the form to capture clicks
-$form.ShowDialog()
-
-# Check if ESC is pressed to exit
-while ($form.Visible) {
-    Start-Sleep -Milliseconds 100
-    if ([System.Windows.Forms.Control]::ModifierKeys -eq [System.Windows.Forms.Keys]::Escape) {
+# Handle KeyPress for ESC to exit
+$form.Add_KeyPress({
+    if ($args[1].KeyChar -eq [char][System.Windows.Forms.Keys]::Escape) {
         Write-Host "Exiting Mouse Position Mapper."
         $form.Close()
     }
-}
+})
+
+# Show the form to capture clicks
+$form.ShowDialog()
+
