@@ -1,8 +1,8 @@
-# MousePositionMapper.ps1
+# MouseMapper.ps1
 
 ## Overview
 
-`MousePositionMapper.ps1` is a PowerShell script designed to record mouse positions and save them to a file. It logs each position with a unique ID, timestamp, and attempt number.
+`MouseMapper.ps1` is a PowerShell script designed to record mouse positions and save them to a file. It logs each position with a unique ID, timestamp, and attempt number.
 
 ## Features
 
@@ -27,5 +27,5 @@
 
 ```powershell
 # Run the script
-.\MousePositionMapper.ps1
+.\MouseMapperMain.ps1
 ```
