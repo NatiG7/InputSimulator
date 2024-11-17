@@ -1,8 +1,9 @@
-# InputSimulator.ps1
+# Input Simulator
 
 ## Overview
 
-`InputSimulator.ps1` is a PowerShell script designed to simulate keyboard inputs and mouse clicks using .NET's `System.Windows.Forms` library. This script allows you to automate interactions with user interface elements by sending keystrokes and mouse events.
+`InputSimulator.ps1` is a PowerShell script designed to simulate keyboard inputs and mouse clicks using .NET's `System.Windows.Forms` library.\
+This script allows you to automate interactions with user interface elements by sending keystrokes and mouse events.
 
 ## Requirements
 
@@ -11,31 +12,38 @@
 
 ## Features
 
-- Simulate key presses.
-- Simulate mouse clicks and movements.
+- Simulate key presses,mouse clicks and movements.
 - Prompt user with Yes/No dialogs between actions.
+- Contains utility methods for working with the script.
+- Added a mouse mapping utility to be used with the simulator
 
 ## Usage
 
 1. **Run the Script:** Execute the script in PowerShell.
-2. **Setup:** Define which actions and keypresses you need and set them up
+   * Note  : you can either run {script}Main.ps1 to load the methods and functions
+   * or load running one by one
+3. **Setup:** Define which actions and keypresses you need and set them up, e.g :
 
     ```powershell
-    # --- Step 1: Mouse Logic ---
-        $step1Logic = {
-        [InputSimulator]::SetMousePosition(1024, 256) # Moves mouse
-    }
+    $step1Logic = {
+    [InputSimulator]::SetMousePosition(512, 256) # Moves mouse to a selected location
+    FlashMouseCursor # Debug line to highlight mouse pos after moving
+    [InputSimulator]::ClickMouse() # Click at Position
+    [InputSimulator]::PressKey(0x36) # Press a key ( '6' for 0x36 )
 
-    # --- Step 2: Simulate Key Press ---
-    $step2Logic = {
-        [InputSimulator]::SetMousePosition(50, 50) # Moves mouse
-        FlashMouseCursor # Moves cursor rapidly to visually identify
-        [InputSimulator]::PressKey(0x41)  # Press the 'A' key
-        [InputSimulator]::PressKey(0x32)
-    }
+    $myPromptToUser = $null
+    while ($myPromptToUser -ne [System.Windows.Forms.DialogResult]::Yes) {
+        # Logic will continue to next step if user.choice is "Yes"
+        $myPromptToUser = Show-YesNoDialog "{Prompt Here}"
+        if ($myPromptToUser -eq [System.Windows.Forms.DialogResult]::Yes) {
+            [InputSimulator]::SetMousePosition(256, 512) # Move mouse somewhere else
+            FlashMouseCursor # Debug line to highlight mouse pos after moving
+            [InputSimulator]::ClickMouse() # Click at new position
+            $step2Logic # Move to step 2
+        }
     ```
 
-3. **Execute:** Once you are satisfied with the logic and actions run the script.
+4. **Execute:** Once you are satisfied with the logic and actions run the script.
 It will prompt a yes/no dialog between every stepLogic in *...Main.ps1
 
 ### Example
