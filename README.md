@@ -17,6 +17,17 @@ This script allows you to automate interactions with user interface elements by 
 - Contains utility methods for working with the script.
 - Added a mouse mapping utility to be used with the simulator
 
+## Methods
+
+Available Methods :\
+[For MouseMapper please refer to MouseMapper README.md]
+```
+[InputSimulator]::SetMousePosition(int x, int y) - moves mouse to x,y
+[InputSimulator]::GetMousePosition() - returns current x,y
+[InputSimulator]::ClickMouse() - simulate a click
+[InputSimulator]::PressKey(byte key) - e.g 0x41 = 'A'
+```
+
 ## Usage
 
 1. **Run the Script:** Execute the script in PowerShell.
