@@ -17,6 +17,8 @@ This script allows you to automate interactions with user interface elements by 
 - Contains utility methods for working with the script.
 - Added a mouse mapping utility to be used with the simulator
 
+- ### MouseMapper script included to get x,y positions of mouse.
+
 ## Methods
 
 Available Methods :\
